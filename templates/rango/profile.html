@@ -1,0 +1,29 @@
+{% extends 'rango/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Your Profile{% endblock %}
+
+{% block body_block %}
+
+    <div class="page-header">
+        <h1>Rango says... hello {{ user.username }}!</h1>
+    </div>
+
+    <div>
+        {% if user.email %}
+            <li>Email: {{ user.email }}</li>
+        {% else %}
+            <li>Email: Not given :(</li>
+        {% endif %}
+        {% if user_profile.website %}
+            <li>Website: <a href={{ user_profile.website }}>{{user_profile.website}}</a></li>
+        {% else %}
+            <li>Website: Not given :(</li>
+        {% endif %}
+        {% if user_profile.picture %}
+            <img height="300" src="{{ user_profile.picture.url }}" alt="Oh hai, there is meant to be a picture here.." />
+        {% else %}
+            <li>Picture: Not given :(</li>
+        {% endif %}
+{% endblock %}
