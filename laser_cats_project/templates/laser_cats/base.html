@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Laser Cats - {% block title %}How to Laser with Laser Cats!!{% endblock %}</title>
+    </head>
+
+    <body>
+        <div>
+            {% block body_block %}{% endblock %}
+        </div>
+
+        <hr />
+
+        <div>
+            <ul>
+            {% if user.is_authenticated %}
+                <li><a href="/lasercats/restricted/">Restricted Page</a></li>
+                <li><a href="/lasercats/logout/">Logout</a></li>
+                <li><a href="/lasercats/add_animalprofile/">Add a New Pet</a></li>
+            {% else %}
+                <li><a href="/lasercats/register/">Register Here</a></li>
+                <li><a href="/lasercats/login/">Login</a></li>
+            {% endif %}
+
+              
+            </ul>
+        </div>
+    </body>
+</html>

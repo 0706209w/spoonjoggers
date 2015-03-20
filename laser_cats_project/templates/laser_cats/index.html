@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-        <title>lasercats!</title>
+        <title>Welcome to Laser Cats</title>
     </head>
 
     <body>
-        <h1>Welcome to...</h1>
-        LASERCATS <strong>{{ boldmessage }}</strong><br />
-        <a href="/rango/about/">About</a><br />
-    </body>
+        {% if user.is_authenticated %}
+        <h1>Laser Cats says... hello {{ user.username }}!</h1>
+        {% else %}
+        <h1>Laser cat says...hello world!</h1>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <a href="/lasercats/restricted/">Restricted Page</a><br />
+        <a href="/lasercats/logout/">Logout</a><br />
+        <a href="/lasercats/add_animalprofile/">Add a New Pet</a><br />
+        {% else %}
+        <a href="/lasercats/register/">Register Here</a><br />
+        <a href="/lasercats/login/">Login</a><br />
+        {% endif %}
 
+        
+                
+
+        {% if animalprofiles %}
+            <ul>
+                {% for animalprofile in animalprofiles %}
+                <li><a href="/lasercats/animalprofile/{{animalprofile.slug}}">{{animalprofile.name}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no pet profiles present.</strong>
+        {% endif %}
+
+    
+    </body>
 </html>

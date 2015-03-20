@@ -14,6 +14,7 @@ class AnimalProfile(models.Model):
     #choices
     DOG = 'dog'
     CAT = 'cat'
+    BUNNY = 'bnny'
     HORSE = 'hrse'
     FISH = 'fish'
     BIRD = 'bird'
@@ -23,6 +24,7 @@ class AnimalProfile(models.Model):
     animalChoices = (
         (DOG, 'dog'),
         (CAT, 'cat'),
+        (BUNNY, 'bunny'),
         (HORSE, 'horse'),
         (FISH, 'fish'),
         (BIRD, 'bird'),
@@ -45,14 +47,21 @@ class Picture(models.Model):
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     user = models.ForeignKey(AnimalProfile, default='')
-    picture = models.ImageField(upload_to='images', blank=True)
+    picture = models.ImageField(upload_to='/images/', blank=True)
+    #url = models.URLField()
 
     def __unicode__(self):
         return self.title
 
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to = 'profile_images', blank = True)
 
+    def __unicode__(self):
+        return self.user.username
 
 
     

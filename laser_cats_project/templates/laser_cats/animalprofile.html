@@ -1,0 +1,24 @@
+{% extends 'laser_cats/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}{{ animal_name }}{% endblock %}
+
+{% block body_block %}
+        <h1>{{ animal_name }}</h1>
+        {% if animalprofile %}
+            
+            {% if pictures %}
+            <ul>
+                {% for picture in pictures %}
+                
+                <li><a href="{{ picture.caption }}">{{ picture.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>This animal has no pictures.</strong>
+            {% endif %}
+        {% else %}
+            {{ animal_name }} is not on this website :(
+        {% endif %}
+{% endblock %}

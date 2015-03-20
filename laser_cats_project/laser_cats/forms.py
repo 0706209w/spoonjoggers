@@ -1,5 +1,6 @@
 from django import forms
-from laser_cats.models import Picture, AnimalProfile
+from laser_cats.models import Picture, AnimalProfile, UserProfile
+from laser_cats.models import User
 
 class AnimalProfileForm(forms.ModelForm):
 
@@ -33,6 +34,17 @@ class PictureForm(forms.ModelForm):
         # Some fields may allow NULL values, so we may not want to include them...
         # Here, we are hiding the foreign key.
         # we can either exclude the category field from the form,
-        exclude = ('category',)
         #or specify the fields to include (i.e. not include the category field)
         fields = ('title', 'views', 'likes', 'caption', 'picture')
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website', 'picture')

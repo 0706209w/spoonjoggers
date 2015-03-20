@@ -5,6 +5,7 @@
     </head>
 
     <body>
+        {% if user.is_authenticated %}
         <h1>Add your pet!</h1>
 
         <form id="AnimalProfile_form" method="post" action="/lasercats/add_animalprofile/">
@@ -21,6 +22,11 @@
             {% endfor %}
 
             <input type="submit" name="submit" value="Create pet profile!" />
+        {% else %}
+        <h1>Log in to add a pet!</h1>
+        <a href="/lasercats/register/">Register Here</a><br />
+        <a href="/lasercats/login/">Login</a><br />
+        {% endif %}
         </form>
     </body>
 
