@@ -31,5 +31,44 @@ def add_AnimalProfile(request):
 
 
 def AnimalProfile(request):
-
+    
     return
+    
+def add_Picture(request, AnimalProfile_name_slug):
+    try:
+        animal = AnimalProfile.objects.get(slug=AnimalProfile_name_slug)
+    except AnimalProfile.DoesNotExist:
+        animal = None
+        
+    if request.method == 'POST':
+        form - PictureForm(request.POST)
+        if form.is_valid():
+            if animal:
+                picture = form.save(commit = False)
+                picture.user = animal
+                picture.views = 0
+                picture.likes = 0
+                picture.picture = request.FILES['picture']
+                piture.save()
+                return AnimalProfile(request, AnimalProfile_name_slug)
+            else:
+                print form.errors
+        else:
+            form = PictureForm()
+            
+        contect_dict = {'form':form, 'animalprofile':animal}
+        
+        return render(request, 'lasercats/add_picture.html', contect_dict)
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
