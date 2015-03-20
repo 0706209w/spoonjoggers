@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Add your pet!</title>
-    </head>
+{% extends 'laser_cats/base.html' %}
 
+{% load staticfiles %}
+
+{% block title %}Add your pet!{% endblock %}
+
+{% block body_block %}
     <body>
         {% if user.is_authenticated %}
         <h1>Add your pet!</h1>
@@ -24,10 +25,8 @@
             <input type="submit" name="submit" value="Create pet profile!" />
         {% else %}
         <h1>Log in to add a pet!</h1>
-        <a href="/lasercats/register/">Register Here</a><br />
-        <a href="/lasercats/login/">Login</a><br />
+
         {% endif %}
         </form>
     </body>
-
-</html>
+{% endblock %}

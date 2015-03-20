@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Welcome to Laser Cats</title>
-    </head>
+{% extends 'laser_cats/base.html' %}
 
+{% load staticfiles %}
+
+{% block title %}Welcome to Laser Cats{% endblock %}
+
+{% block body_block %}
     <body>
         {% if user.is_authenticated %}
         <h1>Laser Cats says... hello {{ user.username }}!</h1>
         {% else %}
         <h1>Laser cat says...hello world!</h1>
         {% endif %}
-        {% if user.is_authenticated %}
-        <a href="/lasercats/restricted/">Restricted Page</a><br />
-        <a href="/lasercats/logout/">Logout</a><br />
-        <a href="/lasercats/add_animalprofile/">Add a New Pet</a><br />
-        {% else %}
-        <a href="/lasercats/register/">Register Here</a><br />
-        <a href="/lasercats/login/">Login</a><br />
-        {% endif %}
+
 
         
                 
@@ -33,5 +27,4 @@
         {% endif %}
 
     
-    </body>
-</html>
+{% endblock %}

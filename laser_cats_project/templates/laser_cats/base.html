@@ -14,13 +14,14 @@
 
         <div>
             <ul>
+                <li><a href="{% url 'index' %}">Laser Cats Home!</a></li>
             {% if user.is_authenticated %}
-                <li><a href="/lasercats/restricted/">Restricted Page</a></li>
-                <li><a href="/lasercats/logout/">Logout</a></li>
-                <li><a href="/lasercats/add_animalprofile/">Add a New Pet</a></li>
+                <li><a href="{% url 'restricted' %}">Restricted Page</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'add_AnimalProfile' %}">Add a New Pet</a></li>
             {% else %}
-                <li><a href="/lasercats/register/">Register Here</a></li>
-                <li><a href="/lasercats/login/">Login</a></li>
+                <li><a href="{% url 'register' %}">Register Here</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
             {% endif %}
 
               
