@@ -42,55 +42,55 @@ def animalprofile(request, animalprofile_name_slug):
     context_dict = {}
 
     try:
-		if request.method == 'POST':
-			pass
+        if request.method == 'POST':
+            pass
             # Can we find a animal profile name slug with the given name?
             # If we can't, the .get() method raises a DoesNotExist exception.
             # So the .get() method returns one model instance or raises an exception.
-		animalprofile = AnimalProfile.objects.get(slug=animalprofile_name_slug)
-		context_dict['animal_name'] = animalprofile.name
-		context_dict['animalprofile_name_slug'] = animalprofile_name_slug
+        animalprofile = AnimalProfile.objects.get(slug=animalprofile_name_slug)
+        context_dict['animal_name'] = animalprofile.name
+        context_dict['animalprofile_name_slug'] = animalprofile_name_slug
 
         # Retrieve all of the associated pictures.
         # Note that filter returns >= 1 model instance.
-		pictures = Picture.objects.filter(user=animalprofile).order_by('-likes')
+        pictures = Picture.objects.filter(user=animalprofile).order_by('-likes')
 
         # Adds our results list to the template context under name pages.
-		context_dict['pictures'] = pictures
+        context_dict['pictures'] = pictures
         # We also add the animal profile object from the database to the context dictionary.
         # We'll use this in the template to verify that the animalprofile exists.
-		context_dict['animalprofile'] = animalprofile
+        context_dict['animalprofile'] = animalprofile
         #visits = int(request.COOKIES.get('visits', '1'))
-		visits = request.session.get(animalprofile.name+'visits')
-		if not visits:
-			visits = 1
-		reset_last_visit_time = False
-		last_visit = request.session.get(animalprofile.name+'last_visit')
-		if last_visit:
-			last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
-			if (datetime.now() - last_visit_time).seconds > 0:
-				# ...reassign the value of the cookie to +1 of what it was before...
-				visits = visits + 1
-				# ...and update the last visit cookie, too.
-				reset_last_visit_time = True
-		else:
-			# Cookie last_visit doesn't exist, so create it to the current date/time.
-			reset_last_visit_time = True
+        visits = request.session.get(animalprofile.name+'visits')
+        if not visits:
+            visits = 1
+        reset_last_visit_time = False
+        last_visit = request.session.get(animalprofile.name+'last_visit')
+        if last_visit:
+            last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+            if (datetime.now() - last_visit_time).seconds > 0:
+                # ...reassign the value of the cookie to +1 of what it was before...
+                visits = visits + 1
+                # ...and update the last visit cookie, too.
+                reset_last_visit_time = True
+        else:
+            # Cookie last_visit doesn't exist, so create it to the current date/time.
+            reset_last_visit_time = True
 
         #Obtain our Response object early so we can add cookie information.
-		response = render(request, 'laser_cats/index.html', context_dict)
-	
-		if reset_last_visit_time:
-			request.session[animalprofile.name+'last_visit'] = str(datetime.now())
-			request.session[animalprofile.name+'visits'] = visits
-			context_dict[animalprofile.name+'visits'] = visits
-		
-		if request.session.get(animalprofile.name+'visits'):
-			count = request.session.get(animalprofile.name+'visits')
-		else:
-			count = 0
-		response = render(request, 'laser_cats/animalprofile.html', context_dict)
-		
+        response = render(request, 'laser_cats/index.html', context_dict)
+    
+        if reset_last_visit_time:
+            request.session[animalprofile.name+'last_visit'] = str(datetime.now())
+            request.session[animalprofile.name+'visits'] = visits
+            context_dict[animalprofile.name+'visits'] = visits
+        
+        if request.session.get(animalprofile.name+'visits'):
+            count = request.session.get(animalprofile.name+'visits')
+        else:
+            count = 0
+        response = render(request, 'laser_cats/animalprofile.html', context_dict)
+        
     except AnimalProfile.DoesNotExist:
         # We get here if we didn't find the specified profile.
         # Don't do anything - the template displays the "no profile" message for us.
@@ -254,22 +254,29 @@ def add_like(animal_name):
 def request_page(request):
   if(request.GET.get('mybtn')):
     add_like.add_like(animal_name)
-  return render_to_response('laser_cats/animalprofile.html')				
+  return render_to_response('laser_cats/animalprofile.html')                
                 
 def track_url(request):
-	context = RequestContext(request) 
-	animalprofile_id = None 
-	url = '/laser_cats/' 
-	if request.method == 'GET': 
-		if 'animalprofile_id' in request.GET:
-			animalprofile_id = request.GET['animalprofile_id']
-			try: 
-				animalprofile = animalprofile.objects.get(id=animalprofile_id) 
-				animalprofile.views = animalprofile.views + 1 
-				animalprofile.save() 
-				
-			except: 
-				pass 	
-	return redirect("how to redirect to profile?")
-	               
+    context = RequestContext(request) 
+    animalprofile_id = None 
+    url = '/lasercats/animalprofile/' 
+    if request.method == 'GET': 
+        if 'animalprofile_id' in request.GET:
+            animalprofile_id = request.GET['animalprofile_id']
+            try: 
+                print "1"
+                #print AnimalProfile.objects.get()
+                animalprofile = AnimalProfile.objects.get(id=animalprofile_id) 
+                print "2"
+                animalprofile.views = animalprofile.views + 1 
+                print "3"
+                animalprofile.save()
+                print "4"
+                print url + animalprofile.slug
+                url = url + animalprofile.slug + "/"
+            except: 
+                print "fail"
+                pass    
+    return redirect(url)
+                   
                 
