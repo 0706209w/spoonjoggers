@@ -7,7 +7,13 @@
 {% block body_block %}
         <h1>{{ animal_name }}</h1>
         {% if animalprofile %}
-            
+            Visits: {{animalprofile.views}}</br>
+			Likes: {{animalprofile.likes}}</br>
+			<form action="#" method="get">
+			<input type="submit" class="btn" value="Like" name="mybtn">
+			</form>
+
+
             {% if pictures %}
             <ul>
                 {% for picture in pictures %}

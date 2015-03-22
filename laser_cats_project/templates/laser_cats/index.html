@@ -19,7 +19,16 @@
         {% if animalprofiles %}
             <ul>
                 {% for animalprofile in animalprofiles %}
-                <li><a href="/lasercats/animalprofile/{{animalprofile.slug}}">{{animalprofile.name}}</a></li>
+															<li>
+								<a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a>
+							{% if animalprofile.views > 1 %}
+								({{ animalprofile.views }} views)
+								{% elif animalprofile.views == 1 %}
+								({{ animalprofile.views }} view)
+                            {% endif %}
+								</li>
+
+                <!--<li><a href="/lasercats/animalprofile/{{animalprofile.slug}}">{{animalprofile.name}}</a></li>-->
                 {% endfor %}
             </ul>
         {% else %}
