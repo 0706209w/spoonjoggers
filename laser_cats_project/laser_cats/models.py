@@ -12,28 +12,28 @@ class AnimalProfile(models.Model):
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     owner = models.CharField(max_length=128)
-	
+	#"Dogs", "Cats", "Bunnies", "Horses", "Fish", "Birds", "Reptiles", "Others"]
     #choices
-    DOG = 'dog'
-    CAT = 'cat'
-    BUNNY = 'bnny'
-    HORSE = 'hrse'
-    FISH = 'fish'
-    BIRD = 'bird'
-    REPTILE = 'rptl'
-    OTHER = 'othr' 
+    DOG = 'Dogs'
+    CAT = 'Cats'
+    BUNNY = 'Bunnies'
+    HORSE = 'Horses'
+    FISH = 'Fish'
+    BIRD = 'Birds'
+    REPTILE = 'Reptiles'
+    OTHER = 'Others' 
 
     animalChoices = (
-        (DOG, 'dog'),
-        (CAT, 'cat'),
-        (BUNNY, 'bunny'),
-        (HORSE, 'horse'),
-        (FISH, 'fish'),
-        (BIRD, 'bird'),
-        (REPTILE, 'reptile'),
-        (OTHER, 'any other'),
+        (DOG, 'Dogs'),
+        (CAT, 'Cats'),
+        (BUNNY, 'Bunnies'),
+        (HORSE, 'Horses'),
+        (FISH, 'Fish'),
+        (BIRD, 'Birds'),
+        (REPTILE, 'Reptiles'),
+        (OTHER, 'Others'),
         )
-    animalType = models.CharField(max_length=4, choices=animalChoices, default = OTHER)
+    animalType = models.CharField(max_length=8, choices=animalChoices, default = OTHER)
 
     def save(self, *args, **kwargs):
             self.slug = slugify(self.name)

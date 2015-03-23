@@ -19,7 +19,6 @@
                <h3>Popular pets!</h3>
 
         {% if animalprofiles %}
-		
             
                 {% for animalprofile in animalprofiles %}
 							<h4>								
@@ -53,5 +52,36 @@
           </div>
 
 
+		  
+		         <div class="row placeholders">
+            <div class="col-xs-12 col-sm-6 placeholder">
+               <h3>Popular pictures!</h3>
+
+        {% if animalpictures %}
+            
+                {% for animalpicture in animalpictures %}
+							<h4>								
+			                <a href="{{ animalpicture.picture.url }}">
+							<img src={{animalpicture.picture.url }} width = "200" height="120"></a>
+							<h4>{{ animalpicture.title }}</h4>
+							<h5>{{ animalpicture.caption }}</h5>
+							</br>
+								</br>
+								</h4>
+							
+                <!--<li><a href="/lasercats/animalprofile/{{animalprofile.slug}}">{{animalprofile.name}}</a></li>-->
+                {% endfor %}
+				
+				
+            
+        {% else %}
+            <strong>There are no pet profiles present.</strong>
+        {% endif %}
+
+
+            </div>
+
+
+          </div>
       
         {% endblock %}

@@ -16,9 +16,12 @@ from django.template import RequestContext
 # Create your views here.
 
 def index(request):
+    context_dict = {}
     animalprofile_list = AnimalProfile.objects.order_by('-likes')[:10]
     picture_list = Picture.objects.order_by('-likes')[:5]
-    context_dict = {'animalprofiles':animalprofile_list}
+    context_dict['animalprofiles'] = animalprofile_list
+    context_dict['animalpictures'] = picture_list
+    print context_dict
     return render(request, 'laser_cats/index.html', context_dict)
 
 def add_AnimalProfile(request):
@@ -360,7 +363,15 @@ def track_plike(request):
                 print "fail"
                 pass 				
     return redirect(url)              
-#def myPets(request):
- #   myPets_list = AnimalProfile.objects.filter(owner = user.username)
-  #  context_dict = {'myanimalprofiles':myPets_list}
-  #  return render(request, 'laser_cats/profile.html', context_dict)             
+
+def animal_type(request, typeofanimal):
+    context_dict = {}
+    useranimals = AnimalProfile.objects.filter(animalType=typeofanimal)
+    context_dict['animalswithtype'] = useranimals
+    context_dict['animaltype'] = typeofanimal
+    #useranimals = AnimalProfile.objects.all()
+    #useranimals2 = useranimals[3]
+    #context_dict['user_animals'] = useranimals2.animalType
+ 
+    return render(request, 'laser_cats/animaltype.html', context_dict)
+    #return HttpResponse("Since you're logged in, you can see this text!") 	
