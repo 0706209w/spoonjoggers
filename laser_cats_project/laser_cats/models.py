@@ -11,6 +11,8 @@ class AnimalProfile(models.Model):
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
+    owner = models.CharField(max_length=128)
+	
     #choices
     DOG = 'dog'
     CAT = 'cat'
@@ -47,7 +49,7 @@ class Picture(models.Model):
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     user = models.ForeignKey(AnimalProfile, default='')
-    picture = models.ImageField(upload_to='/images/', blank=True)
+    picture = models.ImageField(upload_to='images/', blank=True)
     #url = models.URLField()
 
     def __unicode__(self):

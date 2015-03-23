@@ -2,38 +2,56 @@
 
 {% load staticfiles %}
 
-{% block title %}Welcome to Laser Cats{% endblock %}
+{% block title %}Index{% endblock %}
 
-{% block body_block %}
-    <body>
-        {% if user.is_authenticated %}
-        <h1>Laser Cats says... hello {{ user.username }}!</h1>
-        {% else %}
-        <h1>Laser cat says...hello world!</h1>
-        {% endif %}
+        {% block body_block %}
+{% if user.is_authenticated %}
+    <div class="page-header">
 
+                <h1>Laser Cats says... hello {{ user.username }}!</h1>
+            {% else %}
+                <h1>Laser Cats says... hello!</h1>
+            {% endif %}
+</div>
 
-        
-                
+         <div class="row placeholders">
+            <div class="col-xs-12 col-sm-6 placeholder">
+               <h3>Popular pets!</h3>
 
         {% if animalprofiles %}
-            <ul>
+		
+            
                 {% for animalprofile in animalprofiles %}
-															<li>
+							<h4>								
 								<a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a>
 							{% if animalprofile.views > 1 %}
 								({{ animalprofile.views }} views)
 								{% elif animalprofile.views == 1 %}
 								({{ animalprofile.views }} view)
                             {% endif %}
-								</li>
-
+							{% if animalprofile.likes > 1 %}
+								({{ animalprofile.likes }} likes)
+								{% elif animalprofile.likes == 1 %}
+								({{ animalprofile.likes }} like)
+                            {% endif %}
+								</br>
+								</h4>
+							
                 <!--<li><a href="/lasercats/animalprofile/{{animalprofile.slug}}">{{animalprofile.name}}</a></li>-->
                 {% endfor %}
-            </ul>
+				
+				
+            
         {% else %}
             <strong>There are no pet profiles present.</strong>
         {% endif %}
 
-    
-{% endblock %}
+
+            </div>
+
+
+          </div>
+
+
+      
+        {% endblock %}

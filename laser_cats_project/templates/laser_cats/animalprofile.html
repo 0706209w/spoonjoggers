@@ -6,19 +6,29 @@
 
 {% block body_block %}
         <h1>{{ animal_name }}</h1>
+		<h2>Owner: {{ animalprofile.owner }}</h2>
+		
+
         {% if animalprofile %}
             Visits: {{animalprofile.views}}</br>
 			Likes: {{animalprofile.likes}}</br>
-			<form action="#" method="get">
-			<input type="submit" class="btn" value="Like" name="mybtn">
-			</form>
-
-
+			{% if user.is_authenticated %}
+			
+			<a href="{% url 'goto2' %}?animalprofile_id={{animalprofile.id}}">Like {{ animalprofile.name }}</a></br>
+			
+			<a href="/lasercats/add_picture/{{animalprofile.slug}}">Add a picture for {{ animalprofile.name }}</a></br></br></br>
+			{% endif %}
+			<div class="row placeholders">
+		<div class="col-xs-12 col-sm-6 placeholder">
+		
             {% if pictures %}
             <ul>
                 {% for picture in pictures %}
                 
-                <li><a href="{{ picture.caption }}">{{ picture.title }}</a></li>
+                
+				<img src={{picture.picture.url }} width = "500" height="300"></br>
+				<a href="{% url 'goto3' %}?picture_id={{picture.id}}">Like  </a>Likes: {{picture.likes}}</br>
+				<a href="{{ picture.picture.url }}">{{ picture.title }}: {{picture.caption}}</a></br></br></br></br></br>
                 {% endfor %}
             </ul>
             {% else %}
@@ -27,4 +37,6 @@
         {% else %}
             {{ animal_name }} is not on this website :(
         {% endif %}
+		</div>
+		</div>
 {% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'laser_cats/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body_block %}
+    <div class="page-header">
+				 {% if user.is_authenticated %}
+                <h1>Welcome to your profile!</h1></br>
+				<img src={{profileimageurl}} /></br>
+				 <h1>{{ user.username }}</h1>
+				 </br>
+				 <h1>your pets!</h1>
+				 {% if animalprofiles %}
+				  <ul>
+                {% for animalprofile in animalprofiles %}
+                
+                <a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a></br>
+                {% endfor %}
+				</ul>
+            {% else %}
+                <strong>This user has no pets =(.</strong>
+            {% endif %}
+				 
+
+		
+
+
+
+				
+				
+            </ul>
+				
+			{% else %}
+			<h1>Login first!</h1></br>
+			<a href="{% url 'login' %}">
+			{%endif %}
+		   </div>
+{% endblock %}

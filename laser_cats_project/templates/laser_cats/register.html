@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laser Cats</title>
-    </head>
-
-    <body>
+{% extends "laser_cats/base.html" %}
+{% block body_block %}
         <h1>Register with Laser Cats</h1>
 
         {% if registered %}
@@ -28,5 +23,4 @@
             <input type="submit" name="submit" value="Register" />
         </form>
         {% endif %}
-    </body>
-</html>
+{% endblock %}

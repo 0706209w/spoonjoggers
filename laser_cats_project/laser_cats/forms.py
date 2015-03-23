@@ -1,6 +1,8 @@
 from django import forms
 from laser_cats.models import Picture, AnimalProfile, UserProfile
 from laser_cats.models import User
+from laser_cats.models import UserProfile
+from django.template import RequestContext
 
 class AnimalProfileForm(forms.ModelForm):
 
@@ -9,6 +11,8 @@ class AnimalProfileForm(forms.ModelForm):
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
     animalType = forms.ChoiceField(choices = AnimalProfile.animalChoices)
+    #owner = forms.CharField(widget=forms.HiddenInput(), required=False)
+    
 
     # An inline class to provide additional information on the form.
     class Meta:
@@ -47,4 +51,4 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture')
+        fields = ('picture',)

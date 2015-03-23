@@ -8,7 +8,10 @@ urlpatterns = patterns('',
         url(r'^add_picture/(?P<animalprofile_name_slug>[\w\-]+)/$', views.add_Picture, name='add_Picture'),
         url(r'^register/$', views.register, name = 'register'),
         url(r'^login/$', views.user_login, name = 'login'),
-        url(r'^restricted/', views.restricted, name = 'restricted'),
+        url(r'^profile/', views.profile, name = 'profile'),
         url(r'^logout/$', views.user_logout, name = 'logout'),
 		url(r'^goto/$', views.track_url, name='goto'),
+		url(r'^goto2/$', views.track_like, name='goto2'),
+		url(r'^goto3/$', views.track_plike, name='goto3'),
+		
         )

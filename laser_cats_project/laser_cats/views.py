@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from laser_cats.forms import AnimalProfileForm, PictureForm, UserForm, UserProfileForm
-from laser_cats.models import AnimalProfile, Picture
+from laser_cats.models import AnimalProfile, Picture, UserProfile
 from datetime import datetime
 from django.contrib.auth.decorators import login_required 
 from django.contrib.auth import logout
@@ -16,19 +16,23 @@ from django.template import RequestContext
 # Create your views here.
 
 def index(request):
-    animalprofile_list = AnimalProfile.objects.order_by('-likes')[:5]
+    animalprofile_list = AnimalProfile.objects.order_by('-likes')[:10]
     picture_list = Picture.objects.order_by('-likes')[:5]
     context_dict = {'animalprofiles':animalprofile_list}
     return render(request, 'laser_cats/index.html', context_dict)
 
 def add_AnimalProfile(request):
+    
+    
+	
     if request.method == 'POST':
         form = AnimalProfileForm(request.POST)
 
         if form.is_valid():
-            form.save(commit=True)
-
-
+			
+            profile = form.save(commit=False)
+            profile.owner = request.user
+            profile.save()
             return index(request)
         else:
             print form.errors
@@ -67,6 +71,7 @@ def animalprofile(request, animalprofile_name_slug):
         reset_last_visit_time = False
         last_visit = request.session.get(animalprofile.name+'last_visit')
         if last_visit:
+            print last_visit[:-7]
             last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
             if (datetime.now() - last_visit_time).seconds > 0:
                 # ...reassign the value of the cookie to +1 of what it was before...
@@ -106,7 +111,7 @@ def add_Picture(request, animalprofile_name_slug):
         animal = None
         
     if request.method == 'POST':
-        form = PictureForm(request.POST)
+        form = PictureForm(request.POST, request.FILES)
         if form.is_valid():
             if animal:
                 picture = form.save(commit = False)
@@ -120,16 +125,18 @@ def add_Picture(request, animalprofile_name_slug):
                 picture.picture = request.FILES['picture']
                 print picture.picture
                 picture.save()
-                
-                return AnimalProfile(request, AnimalProfile_name_slug)
+                context_dict = {'picture_form':form, 'animalprofile':animal, 'animalprofile_name_slug':animalprofile_name_slug}
+                redirecturl = '/lasercats/animalprofile/' + animalprofile_name_slug
+                return HttpResponseRedirect(redirecturl)
+                #return AnimalProfile(request, animalprofile_name_slug)
         else:
             print form.errors
     else:
         form = PictureForm()
         
-    contect_dict = {'picture_form':form, 'animalprofile':animal, 'animalprofile_name_slug':animalprofile_name_slug}
+    context_dict = {'picture_form':form, 'animalprofile':animal, 'animalprofile_name_slug':animalprofile_name_slug}
     
-    return render(request, 'laser_cats/add_picture.html', contect_dict)
+    return render(request, 'laser_cats/add_picture.html', context_dict)
                 
 
 
@@ -233,8 +240,22 @@ def user_login(request):
 
        
 @login_required
-def restricted(request):
-    return render(request, 'laser_cats/restricted.html')
+def profile(request):
+    context_dict = {}
+    userprofile = request.user
+    useranimals = AnimalProfile.objects.filter(owner=userprofile.username)
+    context_dict['profile_name'] = userprofile.username
+    context_dict['user_animals'] = useranimals
+    animalprofile_list = AnimalProfile.objects.filter(owner=userprofile.username)
+    context_dict = {'animalprofiles':animalprofile_list}
+    user_object_list = UserProfile.objects.filter(user=userprofile)
+    try:
+		user_object = user_object_list[0]
+		context_dict ['profileimageurl'] = user_object.picture.url
+    except:
+		context_dict ['profileimageurl'] = "/media/profile_images/default.jpg"
+	
+    return render(request, 'laser_cats/profile.html', context_dict)
     #return HttpResponse("Since you're logged in, you can see this text!") 
     
 # Use the login_required() decorator to ensure only those logged in can access the view.
@@ -264,11 +285,34 @@ def track_url(request):
         if 'animalprofile_id' in request.GET:
             animalprofile_id = request.GET['animalprofile_id']
             try: 
+                
+                #print AnimalProfile.objects.get()
+                animalprofile = AnimalProfile.objects.get(id=animalprofile_id) 
+             
+                animalprofile.views = animalprofile.views + 1 
+               
+                animalprofile.save()
+                
+                
+                url = url + animalprofile.slug + "/"
+            except: 
+                
+                pass    
+    return redirect(url)
+	
+def track_like(request):
+    context = RequestContext(request) 
+    animalprofile_id = None 
+    url = '/lasercats/animalprofile/' 
+    if request.method == 'GET': 
+        if 'animalprofile_id' in request.GET:
+            animalprofile_id = request.GET['animalprofile_id']
+            try: 
                 print "1"
                 #print AnimalProfile.objects.get()
                 animalprofile = AnimalProfile.objects.get(id=animalprofile_id) 
                 print "2"
-                animalprofile.views = animalprofile.views + 1 
+                animalprofile.likes = animalprofile.likes + 1 
                 print "3"
                 animalprofile.save()
                 print "4"
@@ -278,5 +322,45 @@ def track_url(request):
                 print "fail"
                 pass    
     return redirect(url)
-                   
+
+def track_plike(request):
+    context = RequestContext(request) 
+    picture_id = None 
+    animalprofile_id = None 
+    url = '/lasercats/animalprofile/' 
+    if request.method == 'GET': 
+        if 'picture_id' in request.GET:
+            picture_id = request.GET['picture_id']
+            try: 
+
+        
+                picture = Picture.objects.get(id=picture_id) 
+             
+                picture.likes = picture.likes + 1 
+               
+                picture.save()
                 
+      
+                url = url + str(picture.user) + "/"
+
+            except: 
+                print "fail"
+                pass   
+
+    if request.method == 'GET': 
+        if 'animalprofile_id' in request.GET:
+            animalprofile_id = request.GET['animalprofile_id']
+            try: 
+
+                animalprofile = AnimalProfile.objects.get(id=animalprofile_id) 
+   
+                url = url + animalprofile.slug + "/"
+				
+            except: 
+                print "fail"
+                pass 				
+    return redirect(url)              
+#def myPets(request):
+ #   myPets_list = AnimalProfile.objects.filter(owner = user.username)
+  #  context_dict = {'myanimalprofiles':myPets_list}
+  #  return render(request, 'laser_cats/profile.html', context_dict)             
