@@ -20,6 +20,16 @@
   </head>
 
   <body>
+  
+{% load lasercats_extras %}
+<div class="col-sm-3 col-md-1 sidebar">
+
+    {% block side_block %}
+    {% get_animalprofile_list %}
+    {% endblock %}
+
+</div>
+
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -52,10 +62,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-                {% block side_block %}{% endblock %}
 
-        </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
            <div>
                 {% block body_block %}{% endblock %}

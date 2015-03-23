@@ -25,10 +25,14 @@
             <ul>
                 {% for picture in pictures %}
                 
-                
-				<img src={{picture.picture.url }} width = "500" height="300"></br>
-				<a href="{% url 'goto3' %}?picture_id={{picture.id}}">Like  </a>Likes: {{picture.likes}}</br>
-				<a href="{{ picture.picture.url }}">{{ picture.title }}: {{picture.caption}}</a></br></br></br></br></br>
+                <a href="{{ picture.picture.url }}">
+				<img src={{picture.picture.url }} width = "500" height="300"></a>
+				<h4>{{ picture.title }}</h4>
+				</br>
+				<h5>{{ picture.caption }}</h5>
+				</br>
+				<a href="{% url 'goto3' %}?picture_id={{picture.id}}">Like!    </a>Likes: {{picture.likes}}</br></br></br></br></br>
+				<!--{{ picture.title }}: {{picture.caption}}-->
                 {% endfor %}
             </ul>
             {% else %}
