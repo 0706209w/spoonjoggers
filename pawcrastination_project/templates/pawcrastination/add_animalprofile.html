@@ -1,0 +1,32 @@
+{% extends 'pawcrastination/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Add your pet!{% endblock %}
+
+{% block body_block %}
+    <body>
+        {% if user.is_authenticated %}
+        <h1>Add your pet!</h1>
+
+        <form id="AnimalProfile_form" method="post" action="/pawcrastination/add_animalprofile/">
+
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {% endfor %}
+
+            <input type="submit" name="submit" value="Create pet profile!" />
+        {% else %}
+        <h1>Log in to add a pet!</h1>
+
+        {% endif %}
+        </form>
+    </body>
+{% endblock %}
