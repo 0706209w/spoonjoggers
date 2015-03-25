@@ -13,6 +13,7 @@ from django.contrib.auth import logout
 from datetime import datetime
 from django.template.defaulttags import register
 from django.template import RequestContext
+import string
 # Create your views here.
 
 def index(request):
@@ -329,11 +330,11 @@ def track_like(request):
 def track_plike(request):
     context = RequestContext(request) 
     picture_id = None 
-    animalprofile_id = None 
     url = '/pawcrastination/animalprofile/' 
     if request.method == 'GET': 
         if 'picture_id' in request.GET:
             picture_id = request.GET['picture_id']
+			
             try: 
 
         
@@ -342,9 +343,11 @@ def track_plike(request):
                 picture.likes = picture.likes + 1 
                
                 picture.save()
+                x = str(picture.user)
+          
+                x = x.lower()
+                url = url + x + "/"
                 
-      
-                url = url + str(picture.user) + "/"
 
             except: 
                 print "fail"
