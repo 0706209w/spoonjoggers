@@ -5,14 +5,61 @@
 {% block title %}Index{% endblock %}
 
         {% block body_block %}
-{% if user.is_authenticated %}
-    <div class="page-header">
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+   <!-- <li data-target="#myCarousel" data-slide-to="2"></li>-->
+  </ol>
 
-                <h1>Pawcrastination says... hello {{ user.username }}!</h1>
-            {% else %}
-                <h1>Pawcrastination says... hello!</h1>
-            {% endif %}
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+	</br>
+		{% if user.is_authenticated %}
+      <h1>Welcome back to Pawcrastination {{ user.username }}!</h1>
+	{% else %}
+       <h1>Welcome to Pawcrastination!</h1></br>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browse pictures all day long!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like that fluffy thing 200 times!!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waste ALL the time!</h4>
+	  {% endif %} 
+	  <h6>&nbsp;</h6>
+
+    </div>
+
+    <!--<div class="item">
+	</br>
+		{% if user.is_authenticated %}
+      <h1>Welcome back to Pawcrastination {{ user.username }}!</h1>
+	{% else %}
+       <h1>Welcome to Pawcrastination!</h1></br>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browse pictures all day long!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like that fluffy thing 200 times!!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waste ALL the time!</h4>
+	  {% endif %} 
+	  <h6>&nbsp;</h6>
+
+    </div>-->
+
+    <div class="item">
+	</br>
+            <h1>About the team!</h1></br>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vincent - The awesome one</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cameron - The weird one</h4>
+	    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stephanie - The wee one</h4>
+		 <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawel - The beardy one</h4>
+	  <h6> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____________________________</h6>
+	 
+    </div>
+  </div>
+
+
 </div>
+
 
          <div class="row placeholders">
             <div class="col-xs-12 col-sm-6 placeholder">
