@@ -16,7 +16,9 @@
 			Likes: {{animalprofile.likes}}</br>
 			{% if user.is_authenticated %}
 			
-			<a href="{% url 'goto2' %}?animalprofile_id={{animalprofile.id}}"><button type="button" class="btn btn-info">Like {{ animalprofile.name }}</button></a></a></br>
+			<a href="{% url 'goto2' %}?animalprofile_id={{animalprofile.id}}">
+			<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Like {{ animalprofile.name }}</button>
+			</a></a></br>
 			
 			</br><a href="/pawcrastination/add_picture/{{animalprofile.slug}}"><button type="button" class="btn btn-info">Add a picture for {{ animalprofile.name }}</button></a></a></br></br></br>
 			{% endif %}
@@ -34,7 +36,7 @@
 				<h5>{{ picture.caption }}</h5>
 				</br>
 				<a href="{% url 'goto3' %}?picture_id={{picture.id}}">
-				<button type="button" class="btn btn-info">Like!</button></a>
+				<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Like!</button></a>
 				
 				   Likes: {{picture.likes}}</br></br></br></br></br>
 				<!--{{ picture.title }}: {{picture.caption}}-->
