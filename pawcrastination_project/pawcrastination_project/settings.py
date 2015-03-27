@@ -24,7 +24,7 @@ print os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '7o4xb(n7%1q(eniu7g1e2j9dq+3mv4p-)-d*w8m79jo2yr2sn-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
