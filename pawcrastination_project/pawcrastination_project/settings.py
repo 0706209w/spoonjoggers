@@ -69,14 +69,6 @@ TEMPLATE_DIRS = (
     TEMPLATE_PATH,
 )
 
-STATIC_PATH = os.path.join(BASE_DIR,'static')
-
-STATIC_URL = '/static/' # You may find this is already defined as such.
-
-STATICFILES_DIRS = (
-    STATIC_PATH,
-)
-
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -105,9 +97,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_PATH = os.path.join(BASE_DIR,'static')
-
+#STATIC_ROOT = os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
 
 REGISTRATION_OPEN = True                # If True, users can register
 ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window; you may, of course, use a different value.
@@ -116,6 +111,4 @@ LOGIN_REDIRECT_URL = '/pawcrastination/'  # The page you want users to arrive at
 LOGIN_URL = '/pawcrastination/login/'
 
 
-STATICFILES_DIRS = (
-    STATIC_PATH,
-)
+
