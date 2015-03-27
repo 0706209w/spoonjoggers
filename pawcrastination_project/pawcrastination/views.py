@@ -22,6 +22,7 @@ def index(request):
     picture_list = Picture.objects.order_by('-likes')[:5]
     context_dict['animalprofiles'] = animalprofile_list
     context_dict['animalpictures'] = picture_list
+    context_dict['host'] = request.get_host()
     print context_dict
     return render(request, 'pawcrastination/index.html', context_dict)
 
