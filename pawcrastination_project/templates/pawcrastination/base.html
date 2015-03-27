@@ -29,7 +29,7 @@
  
 {% load pawcrastination_extras %}
 {% load staticfiles %}
-
+ <body background="/media/images/background.jpg">
 <div class="col-sm-3 col-md-1 sidebar">
 
     {% block side_block %}
@@ -38,7 +38,33 @@
 
 </div>
 
+    <style>
+    #wrapper{
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+		left: 600px;
+    }
 
+    #myimage{
+        display: block;
+        position: relative;
+        margin: auto;
+        width: ;
+   }
+    #mybutton1{
+        display: block;
+        position: relative;
+        margin: auto;
+        width: 5%;
+   }
+   </style>
+
+    <div id="wrapper">
+		<img id="myimage" src="/media/images/Cats.gif" />
+
+    </div>
+	
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -87,7 +113,11 @@
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-	<script src="{% static "js/pawcrastination-jquery.js" %}"></script>
 	<script src="{% static "js/pawcrastination-ajax.js" %}"></script>
+	<script src="{% static "js/pawcrastination-jquery.js" %}"></script>
+	<script>
+		jQuery.noConflict();
+	</script>
+
   </body>
 </html>

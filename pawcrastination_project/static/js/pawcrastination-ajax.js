@@ -1,8 +1,12 @@
-$('#likes').click(function(){
-    var picid;
-    picid = $(this).attr("data-profileid");
-    $.get('/pawcrastination/goto3/', {animalprofile_id: profileid}, function(data){
-               $('#like_count').html(data);
-               $('#likes').hide();
-    });
-});
+function myHide() {
+
+jQuery('#wrapper2').hide();
+jQuery('#wrapper3').show();
+
+}
+function myShow() {
+
+jQuery('#wrapper2').show();
+jQuery('#wrapper3').hide();
+
+}
