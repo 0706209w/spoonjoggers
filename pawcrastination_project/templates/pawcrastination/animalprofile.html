@@ -20,7 +20,10 @@
 			<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Like {{ animalprofile.name }}</button>
 			</a></a></br>
 			
+			
+			{% if user.username = animalprofile.owner %}
 			</br><a href="/pawcrastination/add_picture/{{animalprofile.slug}}"><button type="button" class="btn btn-info">Add a picture for {{ animalprofile.name }}</button></a></a></br></br></br>
+			{% endif %}
 			{% endif %}
 			<div class="row placeholders">
 		<div class="col-xs-12 col-sm-6 placeholder">
@@ -36,9 +39,11 @@
 				<h5>{{ picture.caption }}</h5>
 				</br>
 				<a href="{% url 'goto3' %}?picture_id={{picture.id}}">
-				<button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Like!</button></a>
+				<button type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-thumbs-up"></span> Like!</button></a>
 				
-				   Likes: {{picture.likes}}</br></br></br></br></br>
+				  Likes: {{picture.likes}}
+				  </br></br></br></br></br>
 				<!--{{ picture.title }}: {{picture.caption}}-->
                 {% endfor %}
             </ul>

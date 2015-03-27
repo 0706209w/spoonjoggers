@@ -18,7 +18,11 @@
     <div class="item active">
 	</br>
 		{% if user.is_authenticated %}
-      <h1>Welcome back to Pawcrastination {{ user.username }}!</h1>
+      <h1>Welcome back to Pawcrastination {{ user.username }}!</h1></br>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browse pictures all day long!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like that fluffy thing 200 times!!</h4>
+	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waste ALL the time!</h4>
 	{% else %}
        <h1>Welcome to Pawcrastination!</h1></br>
 	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
@@ -30,29 +34,15 @@
 
     </div>
 
-    <!--<div class="item">
-	</br>
-		{% if user.is_authenticated %}
-      <h1>Welcome back to Pawcrastination {{ user.username }}!</h1>
-	{% else %}
-       <h1>Welcome to Pawcrastination!</h1></br>
-	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
-	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browse pictures all day long!</h4>
-	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like that fluffy thing 200 times!!</h4>
-	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waste ALL the time!</h4>
-	  {% endif %} 
-	  <h6>&nbsp;</h6>
-
-    </div>-->
 
     <div class="item">
 	</br>
-            <h1>About the team!</h1></br>
-	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vincent - The awesome one</h4>
-	   <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cameron - The weird one</h4>
-	    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stephanie - The wee one</h4>
-		 <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawel - The beardy one</h4>
-	  <h6> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____________________________</h6>
+            <h1>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;About the team!</h1></br>
+	   <h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Vincent - The awesome one</h4>
+	   <h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Cameron - The weird one</h4>
+	    <h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Stephanie - The wee one</h4>
+		 <h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Pawel - The beardy one</h4>
+	  <h6> &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;____________________________</h6>
 	 
     </div>
   </div>
@@ -104,13 +94,17 @@
             <div class="col-xs-12 col-sm-6 placeholder">
                <h3>Popular pictures!</h3>
 
+
         {% if animalpictures %}
             
                 {% for animalpicture in animalpictures %}
-							<h4>								
-			                <a href="{{ animalpicture.picture.url }}">
-							<img src={{animalpicture.picture.url }} width = "200" height="120"></a>
+							<h4>
+							<!--<button id="picture-pop" href = "{{ animalpicture.picture.url }}" > Click Me - I'm Javascript on Speed</button>-->
+							<a href="{{ animalpicture.picture.url }}">
+							<img src={{animalpicture.picture.url }} width = "200" height="120"></a></br></br>
+							<a href="{% url 'goto' %}?animalprofile_id={{animalpicture.user.id}}">{{ animalpicture.user.name }}</a>
 							<h4>{{ animalpicture.title }}</h4>
+							
 							<h5>{{ animalpicture.caption }}</h5>
 							</br>
 								</br>
@@ -122,7 +116,7 @@
 				
             
         {% else %}
-            <strong>There are no pet profiles present.</strong>
+            <strong>There are no pet pictures present.</strong>
         {% endif %}
 
 

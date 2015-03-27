@@ -119,15 +119,10 @@ def add_Picture(request, animalprofile_name_slug):
         if form.is_valid():
             if animal:
                 picture = form.save(commit = False)
-                print picture
-                print "1"
                 picture.user = animal
-                print "2"
                 picture.views = 0
                 picture.likes = 0
-                print "3"
                 picture.picture = request.FILES['picture']
-                print picture.picture
                 picture.save()
                 context_dict = {'picture_form':form, 'animalprofile':animal, 'animalprofile_name_slug':animalprofile_name_slug}
                 redirecturl = '/pawcrastination/animalprofile/' + animalprofile_name_slug
@@ -346,6 +341,7 @@ def track_plike(request):
                 x = str(picture.user)
           
                 x = x.lower()
+                x = x.replace(" ", "-")
                 url = url + x + "/"
                 
 

@@ -12,7 +12,6 @@ class AnimalProfile(models.Model):
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     owner = models.CharField(max_length=128)
-	#"Dogs", "Cats", "Bunnies", "Horses", "Fish", "Birds", "Reptiles", "Others"]
     #choices
     DOG = 'Dogs'
     CAT = 'Cats'
@@ -37,6 +36,10 @@ class AnimalProfile(models.Model):
 
     def save(self, *args, **kwargs):
             self.slug = slugify(self.name)
+            if self.views < 0 :
+				self.views = 0
+            if self.likes < 0:
+				self.likes = 0
             super(AnimalProfile, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -51,7 +54,14 @@ class Picture(models.Model):
     user = models.ForeignKey(AnimalProfile, default='')
     picture = models.ImageField(upload_to='images/', blank=True)
     #url = models.URLField()
-
+	 
+    def save(self, *args, **kwargs):  
+        if self.views < 0 :
+			self.views = 0
+        if self.likes < 0:
+			self.likes = 0
+        super(Picture, self).save(*args, **kwargs)
+		
     def __unicode__(self):
         return self.title
 

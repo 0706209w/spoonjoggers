@@ -28,6 +28,8 @@
   <body>
  
 {% load pawcrastination_extras %}
+{% load staticfiles %}
+
 <div class="col-sm-3 col-md-1 sidebar">
 
     {% block side_block %}
@@ -85,6 +87,7 @@
     <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-
+	<script src="{% static "js/pawcrastination-jquery.js" %}"></script>
+	<script src="{% static "js/pawcrastination-ajax.js" %}"></script>
   </body>
 </html>
