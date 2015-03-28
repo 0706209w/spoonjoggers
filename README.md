@@ -5,8 +5,8 @@ Made by team spoonjoggers
 
 ##How To Install
 * Have python2.7 installed with the pip package manager.
-* `pip install -r pip_requirements.txt`
 * `mkvirtualenv virtualpaws` Replace virtualpaws with whatever name you please.
+* `pip install -r pip_requirements.txt`
 * `git clone https://github.com/0706209w/spoonjoggers.git`
 * Setting up the site
   * `cd pawcrastination`
