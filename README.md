@@ -9,7 +9,7 @@ Made by team spoonjoggers
 * `pip install -r pip_requirements.txt`
 * `git clone https://github.com/0706209w/spoonjoggers.git`
 * Setting up the site
-  * `cd pawcrastination`
+  * `cd pawcrastination_project`
   * `python manage.py makemigrations`
   * `python manage.py migrate`
   * `python populate_pawcrastination.py`
