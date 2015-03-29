@@ -3,80 +3,83 @@
 {% block title %}Index{% endblock %}
     {% block body_block %}
 	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner" role="listbox">
+		<div class="carousel-inner" style="max-height:250px;min-height:250px" role="listbox">
 			<div class="item active">
 				<img src="/media/images/Acaro_1.jpg" alt="Smiley face" height="1305" width="1305">
 			</div>
 	<div class="item">
 		</br>
+		<div align="center">
 		{% if user.is_authenticated %}
 			<h1>Welcome back to Pawcrastination {{ user.username }}!</h1></br>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browse pictures all day long!</h4>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like that fluffy thing 200 times!!</h4>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waste ALL the time!</h4>
+			<h4>Pawcrastinate your time away with all the cute things!</h4>
+			<h4>Browse pictures all day long!</h4>
+			<h4>Like that fluffy thing 200 times!!</h4>
+			<h4>Waste ALL the time!</h4>
 		{% else %}
 			<h1>Welcome to Pawcrastination!</h1></br>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pawcrastinate your time away with all the cute things!</h4>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Browse pictures all day long!</h4>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like that fluffy thing 200 times!!</h4>
-			<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Waste ALL the time!</h4>
+			<h4>Pawcrastinate your time away with all the cute things!</h4>
+			<h4>Browse pictures all day long!</h4>
+			<h4>Like that fluffy thing 200 times!!</h4>
+			<h4>Waste ALL the time!</h4>
 		{% endif %} 
 		<h6>&nbsp;</h6>
+		</div>
 
     </div>
 	<div class="item">
 		<img src="/media/images/Acaro_2.jpg" alt="Smiley face" height="1298" width="1298">
 	</div>
-    <div class="item">
+    <div class="item" align="center">
 		</br>
-        <h1>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;About the team!</h1></br>
-		<h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Vincent - The awesome one</h4>
-		<h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Cameron - The weird one</h4>
-	    <h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Stephanie - The wee one</h4>
-		<h4>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Pawel - The beardy one</h4>
-		<h6> &nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;____________________________</h6>
+        <h1>About the team!</h1></br>
+		<h4>Vincent - The awesome one</h4>
+		<h4>Cameron - The weird one</h4>
+	    <h4>Stephanie - The wee one</h4>
+		<h4>Pawel - The beardy one</h4>
+		<h6>____________________________</h6>
     </div>
   </div>
 </div>
- <div class="row placeholders">
-	<div class="col-xs-12 col-sm-10 placeholder">
-	    <h3>Popular pets!</h3>
-		{% if animalprofiles %}
+<div>
+	<div style= "margin-left:100px; width:200px;float:left;display:inline-block;" class="col-xs-12 col-xs-10 placeholder" align="center">
+	    <h3>Popular pets!</h3></br>
+		<style type="text/css">
+		.tg  {border-collapse:collapse;border-spacing:0;}
+		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 20px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 20px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+		.tg .tg-font{font-size:22px;font-family:"Arial Black", Gadget, sans-serif !important;;color:#000000}
+		</style>
+		<table class="tg" align="center" >
+		  <tr>
+			<th class="tg-font">Pet Profiles</th>
+			<th class="tg-font">Views</th>
+			<th class="tg-font">Likes</th>
+		  </tr>
+		  {% if animalprofiles %}
 			{% for animalprofile in animalprofiles %}
-				<h4>								
-				<a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a>
-				{% if animalprofile.views > 1 %}
-					({{ animalprofile.views }} views)
-					{% elif animalprofile.views == 1 %}
-					({{ animalprofile.views }} view)
-				{% endif %}
-				{% if animalprofile.likes > 1 %}
-					({{ animalprofile.likes }} likes)
-					{% elif animalprofile.likes == 1 %}
-					({{ animalprofile.likes }} like)
-				{% endif %}
-				</br>
-				</h4>
-			{% endfor %}
+				<tr>
+				<td><a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</td>
+				<td>{{ animalprofile.views }}</td>
+				<td>{{ animalprofile.likes }}</td>
+				</tr>
+				{% endfor %}
 		{% else %}
-			<strong>There are no pet profiles present.</strong>
+			<tr>
+			<td><strong>There are no pet profiles present.</strong></td>
+			</tr>
 		{% endif %}
+		</table>
 	</div>
-  </div>
-
-<div class="row placeholders">
-	<div class="col-xs-12 col-sm-10 placeholder">
-		<h3>Popular pictures!</h3>
+	<div style="float:right;width:200px;margin-right:200px;overflow:visible" class="col-xs-12 col-sm-10 placeholder">
+		<h3>Popular pictures!</h3></br>
 		{% if animalpictures %}
 			{% for animalpicture in animalpictures %}
 				<h4>
-				
 				<a class = "picture-pop" href1="{{ animalpicture.picture.url }}" href2="{{ host }}">
 				<img src={{animalpicture.picture.url }} width = "200" height="120"></a></br></br>
 				<a href="{% url 'goto' %}?animalprofile_id={{animalpicture.user.id}}">{{ animalpicture.user.name }}</a>
 				<h4>{{ animalpicture.title }}</h4>
-				
 				<h5>{{ animalpicture.caption }}</h5>
 				</br>
 				</br>
@@ -86,5 +89,5 @@
 			<strong>There are no pet pictures present.</strong>
 		{% endif %}
 	</div>
-  </div>
+</div>
 {% endblock %}
