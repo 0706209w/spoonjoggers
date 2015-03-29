@@ -1,3 +1,4 @@
+// Function for opening new popup window for picture.
 jQuery(document).ready(function($) {
 	jQuery('#wrapper3').hide();
 	jQuery('.picture-pop').click( function(event) {
