@@ -3,9 +3,7 @@
     {% for c in cats %}
         <li><a href="{% url 'animaltype' c   %}">{{ c }}</a></li>
     {% endfor %}
-
 {% else %}
     <li> <strong >There are no types present.</strong></li>
-
     </ul>
 {% endif %}

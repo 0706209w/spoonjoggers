@@ -14,7 +14,6 @@ from datetime import datetime
 from django.template.defaulttags import register
 from django.template import RequestContext
 import string
-# Create your views here.
 
 def index(request):
     context_dict = {}
@@ -27,14 +26,9 @@ def index(request):
     return render(request, 'pawcrastination/index.html', context_dict)
 
 def add_AnimalProfile(request):
-    
-    
-	
     if request.method == 'POST':
         form = AnimalProfileForm(request.POST)
-
-        if form.is_valid():
-			
+        if form.is_valid():	
             profile = form.save(commit=False)
             profile.owner = request.user
             profile.save()
@@ -43,13 +37,10 @@ def add_AnimalProfile(request):
             print form.errors
     else:
         form = AnimalProfileForm()
-
     return render(request, 'pawcrastination/add_animalprofile.html', {'form':form})
-
 
 def animalprofile(request, animalprofile_name_slug):
     context_dict = {}
-
     try:
         if request.method == 'POST':
             pass
@@ -59,17 +50,13 @@ def animalprofile(request, animalprofile_name_slug):
         animalprofile = AnimalProfile.objects.get(slug=animalprofile_name_slug)
         context_dict['animal_name'] = animalprofile.name
         context_dict['animalprofile_name_slug'] = animalprofile_name_slug
-
         # Retrieve all of the associated pictures.
-        # Note that filter returns >= 1 model instance.
         pictures = Picture.objects.filter(user=animalprofile).order_by('-likes')
-
-        # Adds our results list to the template context under name pages.
+        # Adds our results list to the template context under name pictures.
         context_dict['pictures'] = pictures
         # We also add the animal profile object from the database to the context dictionary.
         # We'll use this in the template to verify that the animalprofile exists.
         context_dict['animalprofile'] = animalprofile
-        #visits = int(request.COOKIES.get('visits', '1'))
         visits = request.session.get(animalprofile.name+'visits')
         if not visits:
             visits = 1
@@ -79,33 +66,26 @@ def animalprofile(request, animalprofile_name_slug):
             print last_visit[:-7]
             last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
             if (datetime.now() - last_visit_time).seconds > 0:
-                # ...reassign the value of the cookie to +1 of what it was before...
                 visits = visits + 1
-                # ...and update the last visit cookie, too.
                 reset_last_visit_time = True
         else:
             # Cookie last_visit doesn't exist, so create it to the current date/time.
             reset_last_visit_time = True
-
         #Obtain our Response object early so we can add cookie information.
         response = render(request, 'pawcrastination/index.html', context_dict)
-    
         if reset_last_visit_time:
             request.session[animalprofile.name+'last_visit'] = str(datetime.now())
             request.session[animalprofile.name+'visits'] = visits
             context_dict[animalprofile.name+'visits'] = visits
-        
         if request.session.get(animalprofile.name+'visits'):
             count = request.session.get(animalprofile.name+'visits')
         else:
             count = 0
         response = render(request, 'pawcrastination/animalprofile.html', context_dict)
-        
     except AnimalProfile.DoesNotExist:
         # We get here if we didn't find the specified profile.
         # Don't do anything - the template displays the "no profile" message for us.
         pass
-
     # Return response back to the user, updating any cookies that need changed
     return response
     
@@ -113,8 +93,7 @@ def add_Picture(request, animalprofile_name_slug):
     try:
         animal = AnimalProfile.objects.get(slug=animalprofile_name_slug)
     except AnimalProfile.DoesNotExist:
-        animal = None
-        
+        animal = None    
     if request.method == 'POST':
         form = PictureForm(request.POST, request.FILES)
         if form.is_valid():
@@ -132,73 +111,57 @@ def add_Picture(request, animalprofile_name_slug):
         else:
             print form.errors
     else:
-        form = PictureForm()
-        
+        form = PictureForm()   
     context_dict = {'picture_form':form, 'animalprofile':animal, 'animalprofile_name_slug':animalprofile_name_slug}
-    
     return render(request, 'pawcrastination/add_picture.html', context_dict)
                 
-
-
 def register(request):
-
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
     registered = False
-
     # If it's a HTTP POST, we're interested in processing form data.
     if request.method == 'POST':
         # Attempt to grab information from the raw form information.
         # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
-
         # If the two forms are valid...
         if user_form.is_valid() and profile_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
-
             # Now we hash the password with the set_password method.
             # Once hashed, we can update the user object.
             user.set_password(user.password)
             user.save()
-
             # Now sort out the UserProfile instance.
             # Since we need to set the user attribute ourselves, we set commit=False.
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
-
             # Did the user provide a profile picture?
             # If so, we need to get it from the input form and put it in the UserProfile model.
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
-
             # Now we save the UserProfile model instance.
             profile.save()
-
             # Update our variable to tell the template registration was successful.
             registered = True
-
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
         else:
             print user_form.errors, profile_form.errors
-
     # Not a HTTP POST, so we render our form using two ModelForm instances.
     # These forms will be blank, ready for user input.
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-
     # Render the template depending on the context.
     return render(request,
             'pawcrastination/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
                 
 def user_login(request):
-
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         # Gather the username and password provided by the user.
@@ -208,11 +171,9 @@ def user_login(request):
                 # while the request.POST['<variable>'] will raise key error exception
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         # Use Django's machinery to attempt to see if the username/password
         # combination is valid - a User object is returned if it is.
         user = authenticate(username=username, password=password)
-
         # If we have a User object, the details are correct.
         # If None (Python's way of representing the absence of a value), no user
         # with matching credentials was found.
@@ -230,14 +191,12 @@ def user_login(request):
             # Bad login details were provided. So we can't log the user in.
             print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
-
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'pawcrastination/login.html', {})               
-
        
 @login_required
 def profile(request):
@@ -254,16 +213,14 @@ def profile(request):
 		context_dict ['profileimageurl'] = user_object.picture.url
     except:
 		context_dict ['profileimageurl'] = "/media/profile_images/default.jpg"
-	
     return render(request, 'pawcrastination/profile.html', context_dict)
     #return HttpResponse("Since you're logged in, you can see this text!") 
-    
 # Use the login_required() decorator to ensure only those logged in can access the view.
+
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
-
     # Take the user back to the homepage.
     return HttpResponseRedirect('/pawcrastination/')
                 
@@ -284,19 +241,13 @@ def track_url(request):
     if request.method == 'GET': 
         if 'animalprofile_id' in request.GET:
             animalprofile_id = request.GET['animalprofile_id']
-            try: 
-                
+            try:      
                 #print AnimalProfile.objects.get()
                 animalprofile = AnimalProfile.objects.get(id=animalprofile_id) 
-             
                 animalprofile.views = animalprofile.views + 1 
-               
                 animalprofile.save()
-                
-                
                 url = url + animalprofile.slug + "/"
             except: 
-                
                 pass    
     return redirect(url)
 	
@@ -330,35 +281,23 @@ def track_plike(request):
     if request.method == 'GET': 
         if 'picture_id' in request.GET:
             picture_id = request.GET['picture_id']
-			
             try: 
-
-        
                 picture = Picture.objects.get(id=picture_id) 
-             
                 picture.likes = picture.likes + 1 
-               
                 picture.save()
                 x = str(picture.user)
-          
                 x = x.lower()
                 x = x.replace(" ", "-")
                 url = url + x + "/"
-                
-
             except: 
                 print "fail"
                 pass   
-
     if request.method == 'GET': 
         if 'animalprofile_id' in request.GET:
             animalprofile_id = request.GET['animalprofile_id']
             try: 
-
                 animalprofile = AnimalProfile.objects.get(id=animalprofile_id) 
-   
                 url = url + animalprofile.slug + "/"
-				
             except: 
                 print "fail"
                 pass 				
@@ -372,6 +311,5 @@ def animal_type(request, typeofanimal):
     #useranimals = AnimalProfile.objects.all()
     #useranimals2 = useranimals[3]
     #context_dict['user_animals'] = useranimals2.animalType
- 
     return render(request, 'pawcrastination/animaltype.html', context_dict)
     #return HttpResponse("Since you're logged in, you can see this text!") 	

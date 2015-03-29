@@ -14,5 +14,4 @@ urlpatterns = patterns('',
         url(r'^goto2/$', views.track_like, name='goto2'),
         url(r'^goto3/$', views.track_plike, name='goto3'),
         url(r'^animal_type/(?P<typeofanimal>[\w\-]+)/$', views.animal_type, name = 'animaltype'),
-		
         )

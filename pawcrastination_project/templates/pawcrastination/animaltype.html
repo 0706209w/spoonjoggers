@@ -1,19 +1,15 @@
 {% extends 'pawcrastination/base.html' %}
-
 {% load staticfiles %}
-
 {% block title %}Profile{% endblock %}
 
 {% block body_block %}
-    <div class="page-header">
-				
-                <h1>{{ animaltype }} {{ animaltype }} {{ animaltype }}!</h1></br>
-				 </br>
-				  <ul>
-                {% for animalprofile in animalswithtype %}
-                
-                <a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a></br>
-                {% endfor %}
-				</ul>
-		   </div>
+    <div class="page-header">	
+        <h1>{{ animaltype }} {{ animaltype }} {{ animaltype }}!</h1></br>
+		</br>
+		<ul>
+        {% for animalprofile in animalswithtype %}
+			<a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a></br>
+        {% endfor %}
+		</ul>
+	</div>
 {% endblock %}

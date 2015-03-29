@@ -1,36 +1,25 @@
 {% extends 'pawcrastination/base.html' %}
-
 {% load staticfiles %}
-
 {% block title %}{{ animal_name }}{% endblock %}
 
 {% block body_block %}
-
         <h1>{{ animal_name }}</h1>
-		
 		<h2>Owner: {{ animalprofile.owner }} </h2>
-	
-
         {% if animalprofile %}
             Visits: {{animalprofile.views}}</br>
 			Likes: {{animalprofile.likes}}</br>
 			{% if user.is_authenticated %}
-			
-			<a href="{% url 'goto2' %}?animalprofile_id={{animalprofile.id}}"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Like {{ animalprofile.name }}</button>
-			</a></a></br>
-			
-			
-			{% if user.username = animalprofile.owner %}
-			</br><a href="/pawcrastination/add_picture/{{animalprofile.slug}}"><button type="button" class="btn btn-info">Add a picture for {{ animalprofile.name }}</button></a></a></br></br></br>
+				<a href="{% url 'goto2' %}?animalprofile_id={{animalprofile.id}}"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span> Like {{ animalprofile.name }}</button>
+				</a></a></br>
+				{% if user.username = animalprofile.owner %}
+					</br><a href="/pawcrastination/add_picture/{{animalprofile.slug}}"><button type="button" class="btn btn-info">Add a picture for {{ animalprofile.name }}</button></a></a></br></br></br>
+				{% endif %}
 			{% endif %}
-			{% endif %}
-			<div class="row placeholders">
+		<div class="row placeholders">
 		<div class="col-xs-12 col-sm-10 placeholder">
-		
             {% if pictures %}
-            <ul>
+				<ul>
                 {% for picture in pictures %}
-				
                 <a href = " {{ picture.picture.url }}" >
 				<img src={{picture.picture.url }} width = "500" height="300"></a>
 				<h4>{{ picture.title }}</h4>
@@ -40,12 +29,11 @@
 				<a href="{% url 'goto3' %}?picture_id={{picture.id}}">
 				<button type="button" class="btn btn-success">
                 <span class="glyphicon glyphicon-thumbs-up"></span> Like!</button></a>
-				
-				  Likes: {{picture.likes}}
-				  </br></br></br></br></br>
+				 Likes: {{picture.likes}}
+				 </br></br></br></br></br>
 				<!--{{ picture.title }}: {{picture.caption}}-->
                 {% endfor %}
-            </ul>
+				</ul>
             {% else %}
                 <strong>This animal has no pictures.</strong>
             {% endif %}
@@ -54,5 +42,4 @@
         {% endif %}
 		</div>
 		</div>
-	
 {% endblock %}

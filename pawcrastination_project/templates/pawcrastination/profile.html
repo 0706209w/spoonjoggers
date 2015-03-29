@@ -1,69 +1,48 @@
 {% extends 'pawcrastination/base.html' %}
-
 {% load staticfiles %}
-
 {% block title %}Profile{% endblock %}
 
 {% block body_block %}
 	<style>
-    #wrapper2{
-        
+    #wrapper2{    
         bottom: 400px;
         width: 100%;
-		left: 300px;
-		
+		left: 300px;	
     }
 	
     #mybutton2{
         bottom: 880px;
         width: 10%;
-		right: 282px;
-		
+		right: 282px;	
     }
-
-
    </style>
    
-    <div class="page-header">
-				 {% if user.is_authenticated %}
-                <h1>{{ user.username }}'s Profile</h1></br></br>
+<div class="page-header">
+	{% if user.is_authenticated %}
+		<h1>{{ user.username }}'s Profile</h1></br></br>
 		<div id = "wrapper2">
-	    <button type="button" id = mybutton2 class="btn btn-danger btn-xs" onclick="myHide();"><span class="glyphicon glyphicon-ban-circle"></span> Hide yo face!</button>
-		</br><img src= {{profileimageurl}} width = "500" height="300"></br>
+			<button type="button" id = mybutton2 class="btn btn-danger btn-xs" onclick="myHide();"><span class="glyphicon glyphicon-ban-circle"></span> Hide yo face!</button>
+			</br><img src= {{profileimageurl}} width = "500" height="300"></br>
 		</div>
-		
 		<div id = "wrapper3">
-		<button type="button" id=mybutton2 class="btn btn-success btn-xs" onclick="myShow();"><span class="glyphicon glyphicon-heart"></span> Show yo face!</button>
+			<button type="button" id=mybutton2 class="btn btn-success btn-xs" onclick="myShow();"><span class="glyphicon glyphicon-heart"></span> Show yo face!</button>
 		</div>
-				 <h1>{{ user.username }}</h1>
-				 </br>
-				 <h1>your pets!</h1>
-				 {% if animalprofiles %}
-				  <ul>
-                {% for animalprofile in animalprofiles %}
-                
-                <a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a></br>
-                {% endfor %}
-				</ul>
-            {% else %}
-                <strong>This user has no pets =(.</strong>
-            {% endif %}
-				 
-
-		
-
-
-
-				
-				
-            </ul>
-				
-			{% else %}
-			<h1>Login first!</h1></br>
-			<a href="{% url 'login' %}">
-			{%endif %}
-		   </div>
-		   
-
-		
+		<h1>{{ user.username }}</h1>
+		</br>
+		<h1>your pets!</h1>
+		{% if animalprofiles %}
+			 <ul>
+			{% for animalprofile in animalprofiles %}
+				<a href="{% url 'goto' %}?animalprofile_id={{animalprofile.id}}">{{ animalprofile.name }}</a></br>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<strong>This user has no pets =(.</strong>
+		{% endif %}	
+		</ul>	
+	{% else %}
+		<h1>Login first!</h1></br>
+		<a href="{% url 'login' %}">
+	{%endif %}
+</div>
 {% endblock %}

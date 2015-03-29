@@ -9,10 +9,7 @@ class MyRegistrationView(RegistrationView):
         return '/pawcrastination/'
 
 urlpatterns = patterns('',
-    # Examples:
     url(r'^$', include('pawcrastination.urls')),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^pawcrastination/', include('pawcrastination.urls')),
     url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
